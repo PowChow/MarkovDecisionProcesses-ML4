@@ -31,10 +31,11 @@ public class EasyGridWorld implements DomainGenerator {
 	public static final String ACTIONWEST = "west";
 
 	public static final String PFAT = "at";
+	public static String PFATLOCATION;
 
 	// ordered so first dimension is x
 	protected int[][] map = new int[][] { 
-			{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 }, // Easy Grid World 1
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
@@ -45,6 +46,13 @@ public class EasyGridWorld implements DomainGenerator {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 }, };
+		
+// Easy Grid World 2		
+//			{ 0, 0, 0, 0, 0},
+//			{ 0, 1, 1, 1, 0},
+//			{ 0, 1, 1, 1, 0},
+//			{ 1, 0, 1, 1, 0},
+//			{ 0, 0, 0, 0, 0}, };
 
 
 	@Override
@@ -87,8 +95,8 @@ public class EasyGridWorld implements DomainGenerator {
 
 		ObjectInstance location = new MutableObjectInstance(
 				domain.getObjectClass(CLASSLOCATION), "location0");
-		location.setValue(ATTX, 10);
-		location.setValue(ATTY, 10);
+		location.setValue(ATTX, 5);
+		location.setValue(ATTY, 5);
 
 		s.addObject(agent);
 		s.addObject(location);

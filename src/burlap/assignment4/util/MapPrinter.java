@@ -2,7 +2,6 @@ package burlap.assignment4.util;
 
 import java.util.List;
 
-import burlap.assignment4.easy.EasyGridWorld;
 import burlap.behavior.policy.GreedyQPolicy;
 import burlap.behavior.policy.Policy;
 import burlap.oomdp.core.objects.ObjectInstance;
@@ -12,13 +11,14 @@ import burlap.oomdp.core.values.Value;
 public class MapPrinter {
 
 	public static void printMap(int[][] map){
-		System.out.println("/////Grid World Analysis/////\n");
+		int numCols = map[0].length;
+		int numRows = map.length;
 		System.out.println("This is your grid world:");
-		for (int j = 0; j<map[0].length; j++){
+		for (int row = 0; row<numRows; row++){
 	    	 System.out.print("[");
-		     for (int i = 0; i<map.length; i++){
-		    	 System.out.print(String.valueOf(map[j][i]));
-		    	 if(i != map.length-1){
+		     for (int col = 0; col<numCols; col++){
+		    	 System.out.print(String.valueOf(map[row][col]));
+		    	 if(col != numCols-1){
 		    		 System.out.print(",");
 		    	 }
 		     }
@@ -30,13 +30,13 @@ public class MapPrinter {
 
 	}
 	
-	public static void printPolicyMap(List<State> states, Policy p,int[][] map) {
+	public static void printPolicyMap(List<State> states, Policy p,int[][] matrix) {
 
-		     
 		System.out.println();
 		System.out.println("This is your optimal policy:");
-		
-		String[][] policy = new String[map[0].length][map.length];
+		String[][] policy = new String[matrix.length][matrix[0].length];
+		System.out.println("num of rows in policy is " + policy.length);     
+
 		
 		for(State state : states){
 			ObjectInstance agent = state.getObject("agent0");
@@ -72,13 +72,17 @@ public class MapPrinter {
 
 		}
 		
-		for (int j = 0; j<policy[0].length; j++){
+		String[][] printPolicy = matrixToMap(policy);
+		
+		int numCols = printPolicy[0].length;
+		int numRows = printPolicy.length;
+		for (int row = 0; row<numRows; row++){
 	    	 System.out.print("[");
-		     for (int i = 0; i<policy.length; i++){
-		    	 String action = String.valueOf(policy[j][i]);
+		     for (int col = 0; col<numCols; col++){
+		    	 String action = String.valueOf(printPolicy[row][col]);
 		    	 if(action.equals("null")) action ="*";
 		    	 System.out.print(action);
-		    	 if(i != policy.length-1){
+		    	 if(col != numCols-1){
 		    		 System.out.print(",");
 		    	 }
 		     }
@@ -89,5 +93,56 @@ public class MapPrinter {
 //		for(State state : vi.getAllStates()){
 //			System.out.println(state.toString()+":"+p.getAction(state).toString());
 //		}
+	}
+	public static String[][] mapToMatrix(String[][] map) {
+		// its rotated and inverted
+		int numMapRows = map.length;
+		int numMapCols = map[0].length;
+		String[][] matrix = new String[numMapCols][numMapRows];
+		for (int matrixRow = 0; matrixRow<numMapCols; matrixRow++){
+			for (int matrixCol = 0; matrixCol<numMapRows; matrixCol++){
+				matrix[matrixRow][matrixCol] = map[numMapRows-1-matrixCol][matrixRow];
+			}
+		}
+		return matrix;
+	}
+
+	public static String[][] matrixToMap(String[][] matrix) {
+		// its rotated and inverted
+		int numMatrixRows = matrix.length;
+		int numMatrixCols = matrix[0].length;
+		String[][] map = new String[numMatrixCols][numMatrixRows];
+		for (int mapRow = 0; mapRow<numMatrixCols; mapRow++){
+			for (int mapCol = 0; mapCol<numMatrixRows; mapCol++){
+				map[mapRow][mapCol] = matrix[mapCol][numMatrixCols-1-mapRow];
+			}
+		}
+		return map;
+	}
+
+	public static int[][] matrixToMap(int[][] matrix) {
+		// its rotated and inverted
+		int numMatrixRows = matrix.length;
+		int numMatrixCols = matrix[0].length;
+		int[][] map = new int[numMatrixCols][numMatrixRows];
+		for (int mapRow = 0; mapRow<numMatrixCols; mapRow++){
+			for (int mapCol = 0; mapCol<numMatrixRows; mapCol++){
+				map[mapRow][mapCol] = matrix[mapCol][numMatrixCols-1-mapRow];
+			}
+		}
+		return map;
+	}
+
+	public static int[][] mapToMatrix(int[][] map) {
+		// its rotated and inverted
+		int numMapRows = map.length;
+		int numMapCols = map[0].length;
+		int[][] matrix = new int[numMapCols][numMapRows];
+		for (int matrixRow = 0; matrixRow<numMapCols; matrixRow++){
+			for (int matrixCol = 0; matrixCol<numMapRows; matrixCol++){
+				matrix[matrixRow][matrixCol] = map[numMapRows-1-matrixCol][matrixRow];
+			}
+		}
+		return matrix;
 	}
 }

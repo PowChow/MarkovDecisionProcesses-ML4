@@ -28,6 +28,8 @@ public class EasyGridWorldLauncher {
 	private static boolean visualizeInitialGridWorld = false;
 	private static boolean runValueIteration = true;
 	private static boolean runPolicyIteration = true;
+	private static boolean EasyGridPlotTest = true;
+
 	private static boolean runQLearning = true;
 	
 	private static Integer MAX_ITERATIONS = 15;
@@ -62,6 +64,9 @@ public class EasyGridWorldLauncher {
 		if(runQLearning){
 			runQLearning(gen,domain,initialState, rf, tf, env);
 		}
+		if(EasyGridPlotTest){
+			runQLearning(gen,domain,initialState, rf, tf, env);
+		}
 		AnalysisAggregator.printAggregateAnalysis();
 	}
 
@@ -92,8 +97,8 @@ public class EasyGridWorldLauncher {
 			AnalysisAggregator.addStepsToFinishValueIteration(ea.numTimeSteps());
 		}
 		
-//		Visualizer v = gen.getVisualizer();
-//		new EpisodeSequenceVisualizer(v, domain, Arrays.asList(ea));
+		//Visualizer v = gen.getVisualizer();
+		//new EpisodeSequenceVisualizer(v, domain, Arrays.asList(ea));
 		AnalysisAggregator.printValueIterationResults();
 		MapPrinter.printPolicyMap(vi.getAllStates(), p, gen.getMap());
 		System.out.println("\n\n");
@@ -147,7 +152,7 @@ public class EasyGridWorldLauncher {
 				domain,
 				0.99,
 				new SimpleHashableStateFactory(),
-				0.99, 0.99);
+				0.20, 0.20);
 			
 			for (int i = 0; i < numIterations; i++) {
 				ea = agent.runLearningEpisode(env);
